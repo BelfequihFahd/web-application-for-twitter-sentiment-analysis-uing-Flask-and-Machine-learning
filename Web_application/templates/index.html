@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ML Model Demo</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow-y: scroll;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        input[type="text"], button[type="submit"] {
+            width: 300px;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">ML Model Demo</h1>
+        <form method="POST" action="/predict">
+  <div class="form-group">
+    <input type="text" id="text-input" name="text" class="form-control" placeholder="Enter text" oninput="toggleUsernameField()">
+  </div>
+  <div class="form-group">
+    <input type="text" id="username-input" name="username" class="form-control" placeholder="Enter Username" oninput="toggleTextField()">
+  </div>
+  <button type="submit" class="btn btn-primary btn-block">Predict</button>
+</form>
+
+        {% if data is defined and not data.empty %}
+    <table class="table-bordered">
+        <tr>
+            <th>Content</th>
+            <th>Sentiment</th>
+        </tr>
+        {% for index, row in data.iterrows() %}
+            <tr>
+                <td>{{ row['content'] }}</td>
+                <td>{{ row['sentiment'] }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <h3 class="text-center">Entrer un champ</h3>
+{% endif %}
+
+
+    </div>
+</body>
+<script>
+  function toggleUsernameField() {
+    const textInput = document.getElementById('text-input');
+    const usernameInput = document.getElementById('username-input');
+    if (textInput.value.length > 0) {
+      usernameInput.disabled = true;
+    } else {
+      usernameInput.disabled = false;
+    }
+  }
+
+  function toggleTextField() {
+    const textInput = document.getElementById('text-input');
+    const usernameInput = document.getElementById('username-input');
+    if (usernameInput.value.length > 0) {
+      textInput.disabled = true;
+    } else {
+      textInput.disabled = false;
+    }
+  }
+</script>
+
+</html>
+
+
+
